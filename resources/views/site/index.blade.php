@@ -13,6 +13,19 @@
 <body class="btn-success">
     
         <div class="container btn-primary mt-5 ">
+
+            @if(Session::has('success'))
+                <p> {{Session::get('success')}} </p>
+            @endif
+           
+            @if (Session::has('warning'))
+                
+                 <p> {{Session::get('warning')}} </p>
+                
+            @endif
+            
+
+            <button> <a href="{{route('site.create')}}" class="link"> Create New User</a> </button>
       
          <table class="table btn-dark ">
                          
@@ -34,8 +47,21 @@
                        <td>{{$row->registration}}</td>
                        <td>{{$row->gender}}</td>
                        <td>
-                         <button class="btn  btn-inline "><a  href="">Edit</a></button> ||
-                         <button class="btn  btn-inline "><a  href="">Delete</a></button>
+                         <button class="btn  btn-inline "><a  href="{{route('site.show',$row->id)}}">Show</a></button> ||
+                         <button class="btn  btn-inline "><a  href="{{route('site.edit',$row->id)}}">Edit</a></button> ||
+                         
+                         <div style="margin-top:-40px;margin-right:70px">
+                            
+                            <form style="float:right;" onsubmit="return confirm('Are you sure to Delete'); " action="{{route('site.destroy',$row->id)}}" method="POST" >
+                                @csrf
+                               @method('DELETE')
+                  
+              <button  class="btn  btn-inline "><a  href="">Delete</a></button>
+
+                         </div>
+                          
+                        </form>
+                         
                         
                         </td>
                    </tr>

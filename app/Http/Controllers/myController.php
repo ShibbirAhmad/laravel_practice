@@ -26,7 +26,7 @@ class myController extends Controller
      */
     public function create()
     {
-        //
+         return view('site.create');
     }
 
     /**
@@ -37,7 +37,19 @@ class myController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules=[     
+                'name' => 'required|min:4',
+                'roll'    =>  'required',
+                'registration' => 'required',
+                'gender'    => 'required'
+           ];
+
+        $this->validate($request,$rules);
+
+        myModel::create($request->all());
+
+      return redirect()->back()->with('success','user created successfully');
+
     }
 
     /**
@@ -48,7 +60,9 @@ class myController extends Controller
      */
     public function show($id)
     {
-        //
+        $data=myModel::find($id);
+
+        return view('site.show', compact('data'));
     }
 
     /**
@@ -59,7 +73,9 @@ class myController extends Controller
      */
     public function edit($id)
     {
-        //
+         $data=myModel::find($id);
+
+         return view ('site.edit',compact('data'));
     }
 
     /**
@@ -71,7 +87,19 @@ class myController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules=[     
+            'name' => 'required|min:4',
+            'roll'    =>  'required',
+            'registration' => 'required',
+            'gender'    => 'required'
+       ];
+
+    $this->validate($request,$rules);
+
+      $getdata=myModel::find($id);
+      $getdata->update($request->all());
+
+  return redirect()->back()->with('success','your data updated successfully');
     }
 
     /**
@@ -82,6 +110,9 @@ class myController extends Controller
      */
     public function destroy($id)
     {
-        //
+       
+        myModel::where('id',$id)->delete();
+        return redirect()->back()->with('success','one user deleted');
+          
     }
 }

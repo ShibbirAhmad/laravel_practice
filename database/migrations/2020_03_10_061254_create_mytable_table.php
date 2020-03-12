@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Mytable extends Migration
+class CreateMytableTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,8 +19,7 @@ class Mytable extends Migration
             $table->string('roll');
             $table->string('registration');
             $table->string('gender');
-
-       
+            $table->timestamps();
         });
     }
 
@@ -31,6 +30,6 @@ class Mytable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('mytable');
     }
 }
